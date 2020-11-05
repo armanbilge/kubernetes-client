@@ -8,6 +8,9 @@ case class IntValue(value: Int)       extends IntOrString
 case class StringValue(value: String) extends IntOrString
 
 object IntOrString {
+  implicit def wrapInt(value: Int): IntOrString = IntValue(value)
+  implicit def wrapString(value: String): IntOrString = StringValue(value)
+  
   implicit val encode: Encoder[IntOrString] = {
     case IntValue(int)       => Json.fromInt(int)
     case StringValue(string) => Json.fromString(string)
